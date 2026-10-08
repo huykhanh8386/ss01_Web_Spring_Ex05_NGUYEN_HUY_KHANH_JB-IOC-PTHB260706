@@ -1,0 +1,42 @@
+package com.example.session01.modals.services;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import com.example.session01.modals.entities.Product;
+import org.springframework.stereotype.Service;
+
+@Service
+public class ProductServices {
+    private List<Product> products = new ArrayList<Product>(
+            Arrays.asList(
+                    new Product(1, "Dell", 20000000),
+                    new Product(2, "hp", 15000000),
+                    new Product(3, "Mac book", 50000000)
+            )
+    );
+    public List<Product> getProducts() {
+        return products;
+    }
+    public List<Product> getAllProducts() {
+        return products;
+    }
+    public Product addProduct(Product product) {
+        products.add(product);
+        return product;
+    }
+    public Product updateProduct(int id, Product newProduct) {
+        for (Product product : products) {
+            if (product.getId() == id) {
+                product.setName(newProduct.getName());
+                product.setPrice(newProduct.getPrice());
+                return product;
+            }
+        }
+        return null;
+    }
+    public boolean deleteProduct(int id) {
+        return products.removeIf(product -> product.getId() == id);
+    }
+}
