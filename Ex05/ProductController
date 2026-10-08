@@ -1,0 +1,37 @@
+package com.example.session01.controller;
+
+import com.example.session01.modals.entities.Product;
+import com.example.session01.modals.services.ProductServices;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/v1/app")
+public class ProductController {
+
+    @Autowired
+    private ProductServices productService;
+
+    @RequestMapping("/products")
+    public List<Product> getProducts() {
+        return productService.getProducts();
+    }
+    @PostMapping("/products")
+    public Product addProduct(@RequestBody Product product) {
+        return productService.addProduct(product);
+    }
+    @PutMapping("/products/{id}")
+    public Product updateProduct(@PathVariable int id, @RequestBody Product product) {
+        return productService.updateProduct(id, product);
+    }
+    @DeleteMapping("/products/{id}")
+    public String deleteProduct(@PathVariable int id) {
+        boolean result = productService.deleteProduct(id);
+        if (result) {
+            return "Xóa sản phẩm thành công!";
+        }
+        return "Không tìm thấy sản phẩm!";
+    }
+}
